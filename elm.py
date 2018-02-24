@@ -24,11 +24,10 @@ import numpy as np
 import sys
 
 # Insert the paths
-sys.path.insert (0, '/home/arissetyawan/APASCA/__THESIS___/ELM/scikit-learn/sklearn/decomposition')
 sys.path.insert (0, '/home/arissetyawan/APASCA/__THESIS___/ELM/rbm-elm/')
 
 from utilsClassification import sigmoid, cont_error
-from pca import PCA
+from sklearn.decomposition import PCA
 from rbm import RBM
 
 
@@ -44,6 +43,7 @@ class ELM:
     # The constructor method. If you intend to train de ELM, you must fill all parameters.
     # If you already have the weights and wanna only execute the net, just fill W and beta.
     def __init__ (self, neurons=20, inTrain=None, outTrain=None, W=None, beta=None, init='uniform', batchSize=None):
+        print("Initialize parameters:", neurons, inTrain, outTrain, W, beta, init='uniform', batchSize=None)
         # Setting the neuron's number on the hidden layer        
         self.neurons = neurons
         
@@ -68,13 +68,13 @@ class ELM:
                         self.W,_ = np.linalg.qr(self.W.T)
                         self.W = self.W.T
                     else:   
-                        print 'Starting PCA...'
+                        print('Starting PCA...')
                         A = np.random.uniform(-1,1,[neurons,neurons])
                         A,_ = np.linalg.qr(A.T)
                         A = A.T
                         pca = PCA(n_components=neurons)                    
                         wpca = pca.fit_transform(inTrain.T).T
-                        print wpca.shape
+                        print(wpca.shape)
                         self.W = np.dot(A,wpca).T                        
                         # including the bias
                         b = np.random.uniform(-1,1,[1,self.W.shape[1]])                        
@@ -90,7 +90,7 @@ class ELM:
                 self.beta = beta
                 self.W = W
             else:
-                print 'ERROR: you set up the input training as None, but you did no initialize the weights' 
+                print('ERROR: you set up the input training as None, but you did no initialize the weights')
                 raise Exception('ELM initialize error')   
                 
 
@@ -110,7 +110,7 @@ class ELM:
             outNet = np.dot (H,self.beta)
             miss = float(cont_error (self.outTrain, outNet))
             si = float(self.outTrain.shape[0])
-            print 'Miss classification on the training: ', miss, ' of ', si, ' - Accuracy: ', (1-miss/si)*100, '%'
+            print('Miss classification on the training: ', miss, ' of ', si, ' - Accuracy: ', (1-miss/si)*100, '%')
             
     def ostrain (self, nInit=5, epc=1, reg=None, aval=False):
         nSam = self.inTrain.shape[0]
@@ -130,7 +130,7 @@ class ELM:
         beta_prev = np.dot(np.dot(P_prev,H.T),Y0)        
                
         for e in range(epc): 
-            print '\n### epc {} of {} ####'.format(e,epc)
+            print('\n### epc {} of {} ####'.format(e,epc))
             # Sequential phase
             for offset in xrange(0,nSam,self.batchSize):
                 end = offset + self.batchSize
@@ -156,7 +156,7 @@ class ELM:
                     outNet = np.dot (H,beta)
                     miss = float(cont_error (yBatch, outNet))
                     si = float(yBatch.shape[0])
-                    print 'Miss classification on batch {}/{}: {} of {} - Accuracy: {} %'.format(end,nSam, miss, si, (1-miss/si)*100)          
+                    print('Miss classification on batch {}/{}: {} of {} - Accuracy: {} %'.format(end,nSam, miss, si, (1-miss/si)*100))          
             
         self.beta = beta
         
@@ -185,7 +185,7 @@ class ELM:
         beta_prev = np.dot(np.dot(P_prev,H.T),Y0)
         
         for e in range(epc):
-            print '\n### epc {} of {} ####'.format(e,epc)
+            print('\n### epc {} of {} ####'.format(e,epc))
             # Sequential phase
             for offset in xrange(0,nSam,self.batchSize):
                 end = offset + self.batchSize            
@@ -212,7 +212,7 @@ class ELM:
                     outNet = np.dot (H,beta)
                     miss = float(cont_error (yBatch, outNet))
                     si = float(yBatch.shape[0])
-                    print 'Miss classification on batch {}/{}: {} of {} - Accuracy: {} %'.format(end,nSam, miss, si, (1-miss/si)*100)     
+                    print('Miss classification on batch {}/{}: {} of {} - Accuracy: {} %'.format(end,nSam, miss, si, (1-miss/si)*100))
                     
             
         self.beta = beta        
@@ -229,7 +229,7 @@ class ELM:
         
         for offset in xrange(0,nSam,batchSize):
             if verbose:
-                print 'Testing batch {} of {}'.format(offset,nSam/batchSize)
+                print('Testing batch {} of {}'.format(offset,nSam/batchSize))
                 
             end = offset + batchSize            
             if end > nSam:
@@ -249,7 +249,7 @@ class ELM:
                 si = float(netOutput.shape[0])
                 acc = (1-miss/si)*100
                 if verbose:
-                    print '\nMiss classification on the test: ', miss, ' of ', si, ' - Accuracy: ',acc , '%'       
+                    print('\nMiss classification on the test: ', miss, ' of ', si, ' - Accuracy: ',acc , '%')      
                 #return netOutput, acc
                 allNetOut.append(netOutput)
                 allAcc.append(acc)
@@ -270,7 +270,7 @@ class ELM:
             miss = float(cont_error (realOutput, netOutput))
             si = float(netOutput.shape[0])
             acc = (1-miss/si)*100
-            print '\nMiss classification on the test: ', miss, ' of ', si, ' - Accuracy: ',acc , '%'       
+            print('\nMiss classification on the test: ', miss, ' of ', si, ' - Accuracy: ',acc , '%')       
             return netOutput, acc
             
         return netOutput, None
@@ -285,8 +285,8 @@ class ELM:
         wNorm = np.linalg.norm(self.W)
         betaNorm = np.linalg.norm(self.beta)
         if verbose:
-            print 'The norm of W: ', wNorm
-            print 'The norm of beta: ', betaNorm
+            print('The norm of W: ', wNorm)
+            print('The norm of beta: ', betaNorm)
         return wNorm, betaNorm
         
 

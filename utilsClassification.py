@@ -157,7 +157,7 @@ def confusionMatrix (real, net):
     m,n = real.shape
     mat = np.zeros([n,n])
     
-    print m, n    
+    print(m, n)
     
     for i in xrange(m):
         for j in xrange(n):            
@@ -186,7 +186,7 @@ def classificationMetrics (confMat, verbose=True):
     precision = precision/m    
     
     if verbose==True:
-        print 'Recall: ', recall, ' - Precision: ', precision
+        print('Recall: ', recall, ' - Precision: ', precision)
         
     
         

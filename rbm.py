@@ -74,7 +74,7 @@ class RBM:
         if rbmType == 'GBRBM' or rbmType == 'BBRBM':        
             self.rbmType = rbmType
         else:
-            print 'ERROR: this <%s> type does not exist in this code.' % rbmType
+            print('ERROR: this <%s> type does not exist in this code.' % rbmType)
             raise Exception('RBM type error')       
             
         
@@ -102,7 +102,7 @@ class RBM:
                  # error will be printed. Default: 10
     # tol        # The convergence tolerance error for the weights. Default: 10e-5
     def train (self, maxIter=200, lr=0.001, wc=0.0002, iMom=0.5, fMom=0.9, cdIter=1, batchSize=100, verbose=True, freqPrint=10, tol=10e-5):
-        print 'Starting the training...'
+        print('Starting the training...')
         # Checkin the batch size. If it's 0, we use the whole dataset
         if batchSize == 0:
             batchSize = self.nSamples
@@ -194,7 +194,7 @@ class RBM:
             prevWeights = self.weights         
            
             if verbose == True and it % freqPrint == 0:
-                print 'Reconstruction error: ', error, 'Iter: ', it, '  Diff: ', diff                
+                print('Reconstruction error: ', error, 'Iter: ', it, '  Diff: ', diff)            
                 
             if it > 300 and diff <= tol:
                 break
@@ -255,7 +255,7 @@ class RBM:
         diff = mse(self.weights,prevWeights)        
        
         if verbose == True:
-            print 'RBM reconstruction error: ', error, '  W diff: ', diff                
+            print('RBM reconstruction error: ', error, '  W diff: ', diff)
 
                 
     # This method return a reconstruction of a given data. To do this, the RBM needs to be
