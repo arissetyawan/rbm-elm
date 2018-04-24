@@ -59,7 +59,7 @@ class data:
             if normType is not None:
                 self.normalize (dataset, normType, posOut)            
             
-            print dataset
+            print (dataset)
             
             # Shuffling
             if shuf:

@@ -20,8 +20,7 @@ import numpy as np
 import sys
 
 # Insert the util's path
-#sys.path.insert (0, '/home/patcha/Dropbox/Doutorado/Codigos/Python/utils/')
-sys.path.insert (0, '/home/labcin/Dropbox/Codigos/Python/utils/')
+sys.path.insert (0, '/media/arissetyawan/01D01F7DA71A34F0/__PASCA__/__THESIS___/ELM/codes/rbm-elm/')
 
 from utilsClassification import sigmoid, mse
 

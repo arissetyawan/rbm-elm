@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+#!/home/arissetyawan/anaconda3/bin/python
+
 '''
 Author: Andre Pacheco
 E-mail: pacheco.comp@gmail.com
+
+Revised:
+E-mail: arisssetyawan.email@gmail.com
 
 This class implements the restricted Boltzmann machine (RBM) in TensorFlow according to
 Hinton's guideline: 
@@ -16,12 +21,13 @@ If you find some bug, please e-mail me =)
 
 '''
 
-import numpy as np 
+import numpy as np
 import tensorflow as tf
 import sys
 
+sys.path.insert (0, '/home/arissetyawan/tensorflow/')
 # Insert the util's path
-sys.path.insert (0, '/home/patcha/Dropbox/Doutorado/Codigos/Python/utils/')
+sys.path.insert (0, '/media/arissetyawan/01D01F7DA71A34F0/__PASCA__/__THESIS___/ELM/codes/rbm-elm/')
 
 
 from utilsClassification import sigmoid, rmse
@@ -68,7 +74,7 @@ class RBM_TF:
         if rbmType == 'GBRBM' or rbmType == 'BBRBM':        
             self.rbmType = rbmType
         else:
-            print 'ERROR: this <%s> type does not exist in this code.' % rbmType
+            print('ERROR: this <%s> type does not exist in this code.' % rbmType)
             raise Exception('RBM type error')              
         
         self.sess.run(tf.global_variables_initializer())   
@@ -97,7 +103,7 @@ class RBM_TF:
                  # error will be printed. Default: 10
     # tol        # The convergence tolerance error for the weights. Default: 10e-5
     def train (self, maxIter=200, lr=0.001, wc=0.0002, iMom=0.5, fMom=0.9, cdIter=1, batchSize=100, verbose=True, freqPrint=10, tol=10e-5):
-        print 'Starting the training...'
+        print ('Starting the training...')
         # Checkin the batch size. If it's 0, we use the whole dataset        
         if batchSize == 0:
             batchSize = self.nSamples              
@@ -207,7 +213,7 @@ class RBM_TF:
             self.sess.run(attPrevWeights) 
            
             if verbose == True and it % freqPrint == 0:
-                print 'Reconstruction error: ', error, 'Iter: ', it, '  Diff: ', diff                
+                print ('Reconstruction error: ', error, 'Iter: ', it, '  Diff: ', diff)                
                 
             if it > 300 and diff <= tol:
                 break

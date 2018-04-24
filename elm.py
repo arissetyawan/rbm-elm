@@ -24,7 +24,7 @@ import numpy as np
 import sys
 
 # Insert the paths
-sys.path.insert (0, '/home/arissetyawan/APASCA/__THESIS___/ELM/rbm-elm/')
+sys.path.insert (0, '/media/arissetyawan/01D01F7DA71A34F01/__PASCA__/__THESIS___/ELM/codes/rbm-elm/')
 
 from utilsClassification import sigmoid, cont_error
 from sklearn.decomposition import PCA
@@ -43,7 +43,7 @@ class ELM:
     # The constructor method. If you intend to train de ELM, you must fill all parameters.
     # If you already have the weights and wanna only execute the net, just fill W and beta.
     def __init__ (self, neurons=20, inTrain=None, outTrain=None, W=None, beta=None, init='uniform', batchSize=None):
-        print("Initialize parameters:", neurons, inTrain, outTrain, W, beta, init='uniform', batchSize=None)
+        print("Initialize parameters:", neurons, inTrain, outTrain, W, beta, init, batchSize)
         # Setting the neuron's number on the hidden layer        
         self.neurons = neurons
         

@@ -17,9 +17,9 @@ If you find some bug, please e-mail me =)
 import numpy as np
 import tensorflow as tf
 import sys
-
+sys.path.insert (0, '/home/arissetyawan/tensorflow/')
 # Insert the util's path
-sys.path.insert (0, '/home/patcha/Dropbox/Doutorado/Codigos/Python/utils/')
+sys.path.insert (0, '/media/arissetyawan/01D01F7DA71A34F0/__PASCA__/__THESIS___/ELM/codes/rbm-elm/')
 
 
 from utilsClassification import sigmoid, cont_error
@@ -61,7 +61,7 @@ class ELM_TF():
                 self.beta = tf.convert_to_tensor(beta, dtype=tf.float32)
                 self.W = tf.convert_to_tensor(W, dtype=tf.float32)
             else:
-                print 'ERROR: you set up the input training as None, but you did no initialize the weights' 
+                print ('ERROR: you set up the input training as None, but you did no initialize the weights' )
                 raise Exception('ELM initialize error')            
         
         self.sess.run(tf.global_variables_initializer())
@@ -93,7 +93,7 @@ class ELM_TF():
             outTrainNp = self.sess.run(self.outTrain)            
             miss = float(cont_error (outTrainNp, outNetNp))
             si = float(outTrainNp.shape[0])
-            print 'Miss classification on the training: ', miss, ' of ', si, ' - Accuracy: ', (1-miss/si)*100, '%'
+            print ('Miss classification on the training: ', miss, ' of ', si, ' - Accuracy: ', (1-miss/si)*100, '%')
             
     # This method executes the ELM, according to the weights and the data passed as parameter
     def getResult (self, data, realOutput=None, aval=False):
@@ -109,7 +109,7 @@ class ELM_TF():
             miss = float(cont_error (realOutput, netOutputNp))
             si = float(netOutputNp.shape[0])
             acc = (1-miss/si)*100
-            print 'Miss classification on the test: ', miss, ' of ', si, ' - Accuracy: ',acc , '%'       
+            print ('Miss classification on the test: ', miss, ' of ', si, ' - Accuracy: ',acc , '%')
             return netOutput, acc
             
         return netOutput, None

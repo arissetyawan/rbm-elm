@@ -42,8 +42,8 @@ def getMaxLabel (vin):
       vout = np.zeros([m,n])
 
       mx = vin.max(axis=1)
-      for i in xrange(m):
-            for j in xrange(n):
+      for i in range(m):
+            for j in range(n):
                   vout[i,j] = int (mx[i] == vin[i,j])                  
 
       return vout
@@ -58,9 +58,9 @@ def cont_error (vreal, vclass):
       dif = vreal - vclass
       err = 0
 
-      for i in xrange(m):
+      for i in range(m):
             flag = 0
-            for j in xrange(n):
+            for j in range(n):
                   if dif[i,j] != 0:
                         flag = 1
 
@@ -113,7 +113,7 @@ def shuffleData (dataIn, dataOut):
     newIn = list()
     newOut = list()
    
-    for i in xrange(n1):
+    for i in range(n1):
         newIn.append (dataIn[pos[i]])        
         newOut.append(dataOut[pos[i]])
 
@@ -123,7 +123,7 @@ def shuffleData (dataIn, dataOut):
 def flatList (l):
     n = len(l)
     ret = list()
-    for i in xrange(n):
+    for i in range(n):
         ret.append (l[i].flatten())
     return ret
     
@@ -159,8 +159,8 @@ def confusionMatrix (real, net):
     
     print(m, n)
     
-    for i in xrange(m):
-        for j in xrange(n):            
+    for i in range(m):
+        for j in range(n):            
             if real[i,j] == 1:
                 cReal = j
             if net[i,j] == 1:
@@ -178,7 +178,7 @@ def classificationMetrics (confMat, verbose=True):
     totalLabel = confMat.sum(axis=0)
     totalPredicted = confMat.sum(axis=1)
     
-    for k in xrange(m):        
+    for k in range(m):        
         recall += confMat[k,k]/totalLabel[k]
         precision += confMat[k,k]/totalPredicted[k]
 
@@ -206,8 +206,8 @@ def classificationMetrics (confMat, verbose=True):
 # data = [p(1,1), p(1,2)...p(res,1)...p(res,res)]    
 def remountImg (data, res):    
     newImg = np.zeros([res,res])        
-    for i in xrange(res):
-        for j in xrange(res):
+    for i in range(res):
+        for j in range(res):
             newImg[i,j] = data[i*res + j]
     
     return newImg

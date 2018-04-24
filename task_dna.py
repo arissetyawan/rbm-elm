@@ -4,14 +4,16 @@
 Author: André Pacheco
 E-mail: pacheco.comp@gmail.com
 
+Revised: Aris Setyawan
+E-mail: arissetyawan.email@gmail.com
+
 """
 
 import sys
-sys.path.insert (0, '/home/patcha/Dropbox/Doutorado/Codigos/Python/utils')
+sys.path.insert (0, '/media/arissetyawan/01D01F7DA71A34F01/__PASCA__/__THESIS___/ELM/codes/rbm-elm/')
+sys.path.insert (0, '/usr/local/lib/python3.6/site-packages/')
 
-sys.path.insert (0, '/home/patcha/Dropbox/Doutorado/Codigos/Python/RBM')
-sys.path.insert (0, '/home/patcha/Dropbox/Doutorado/Codigos/Python/ELM')
-
+import tensorflow as tf
 
 import numpy as np
 from elm import *
@@ -22,18 +24,43 @@ from rbm import *
 from rbm_tensorflow import *
 import time
 import gc
-import tensorflow as tf
-from plotsFuncs import *
+import matplotlib.pyplot as plt
+import scipy
+import plotly.plotly as py
+from plotly.tools import FigureFactory as FF
 
-it = 30
+it = 1
 hidNeurons = 250
-maxIterRbm = 15
-
+maxIterRbm = 17
+ 
 # loading the data set
-print 'Loading the dataset...'
-dnaTest = np.genfromtxt('/home/patcha/Datasets/DNA/dna_test.csv', delimiter=',')
-dnaVal = np.genfromtxt('/home/patcha/Datasets/DNA/dna_val.csv', delimiter=',')
-dnaTrain = np.genfromtxt('/home/patcha/Datasets/DNA/dna_train.csv', delimiter=',')
+print('Loading the dataset...')
+    # The __init__ parameters:    
+    # dataset: the whole dataset. Default = None. You need to upload the split datasets with load method
+    # percTrain: the % of train data
+    # percVal: the % of validation data
+    # percTest: the % of test data
+    # Shuf: If you wanna shuffle the dataset set it as True, otherwise, False
+    # posOut: The output position in the dataset. You can choose: last, for the last column
+    # or first, for the first column. If there is no output, set it as None.    
+    # outBin: if it's true, the output will rise one bit for each position. Ex: if the output
+    # is 3, the binary output will be an array [0, 0. 1].
+    # If the dataset has already been splitted, you can upload all the partitions using
+    # train, val and test. 
+
+#     def __init__(self, dataset=None, train=None, val=None, test=None, percTrain=0.7, percVal=0.1, percTest=0.2, normType='max', shuf=True, posOut='last', outBin=True):
+
+#dna= data(nul, dataset=None, percTrain=0.7, percVal=0.1, percTest=0.2, normType='max', shuf=True, posOut='last', outBin=True)
+
+# test file
+print ( 'Loading test file...')  
+dnaTest = np.genfromtxt('/home/arissetyawan/APASCA/__THESIS___/ELM/codes/datasets/dna/dna_test.csv', delimiter=',')
+# label ?
+print ( 'Loading label file...')  
+dnaVal = np.genfromtxt('/home/arissetyawan/APASCA/__THESIS___/ELM/codes/datasets/dna/dna_val.csv', delimiter=',')
+# train 
+print ( 'Loading train file...')  
+dnaTrain = np.genfromtxt('/home/arissetyawan/APASCA/__THESIS___/ELM/codes/datasets/dna/dna_train.csv', delimiter=',')
 
 dnaTrain = np.concatenate((dnaTrain,dnaVal))
 
@@ -47,7 +74,7 @@ acc3 = list()
 tim3 = list()
 
 dna = data (train=dnaTrain, test=dnaTest, val=dnaVal, posOut='first')
-print dna
+print (dna)
 
 normRBMELM = list()
 normELM = list()
@@ -58,7 +85,8 @@ for i in range(it):
 
     
     ###########################################################################
-    print 'Starting training RBM ', i , ' ...'  
+    print ('*' * i)
+    print ( 'Starting training RBM ', i , ' ...')  
     
     init = time.time() # getting the start time
     rbmNet = RBM_TF (dataIn=dna.trainIn, numHid=hidNeurons, rbmType='GBRBM')
@@ -67,7 +95,7 @@ for i in range(it):
     W = np.concatenate ((rbmNet.getWeights(), rbmNet.getHidBias()), axis = 0)        
     del(rbmNet)    
     
-    print 'Starting training RBM-ELM ', i , ' ...' 
+    print ( 'Starting training RBM-ELM ', i , ' ...' )
     elmNet = ELM (hidNeurons, dna.trainIn, dna.trainOut, W)
     elmNet.train(aval=True)    
     end = time.time() # getting the end time     
@@ -80,8 +108,8 @@ for i in range(it):
     del(elmNet)
     
     ###########################################################################
-    print '\n\n'
-    print 'Starting training ELM ', i , ' ...' 
+    print ('\n\n')
+    print ('Starting training ELM ', i , ' ...' )
     init2 = time.time()
     elmNet = ELM (hidNeurons, dna.trainIn, dna.trainOut)
     elmNet.train(aval=True)    
@@ -95,8 +123,8 @@ for i in range(it):
     del(elmNet)
 
     ###########################################################################
-    print '\n\n'
-    print 'Starting training ELM-RO ', i , ' ...' 
+    print ('\n\n')
+    print ('Starting training ELM-RO ', i , ' ...' )
     init3 = time.time()    
     elmNet = ELM (hidNeurons, dna.trainIn, dna.trainOut, init='RO')
     elmNet.train(aval=True)     
@@ -110,47 +138,45 @@ for i in range(it):
     del(elmNet)
     
     ###########################################################################   
-    print '\nIteration time: ', end3-init, ' sec', 'Predict to end: ', (end3-init)*(it-i)/60, ' min'
+    print ('\nIteration time: ', end3-init, ' sec', 'Predict to end: ', (end3-init)*(it-i)/60, ' min')
     
     #del(dna)   
     gc.collect()
 	
-print '######### DNA ',maxIterRbm, ' ############' 
-print 'Both RBM-ELM:'
+print ('######### DNA ',maxIterRbm, ' ############' )
+print ('Both RBM-ELM:')
 acc = np.asarray(acc)
 tim = np.asarray(tim)
 normRBMELM = np.asarray(normRBMELM)
-print 'Accuracy - Mean: ', acc.mean(), ' | Std: ', acc.std()
-print 'Time - Mean ', tim.mean(), ' | Std: ', tim.std()
-print 'Norm - Mean ', normRBMELM.mean(), ' | Std: ', normRBMELM.std()
+print ('Accuracy - Mean: ', acc.mean(), ' | Std: ', acc.std())
+print ('Time - Mean ', tim.mean(), ' | Std: ', tim.std())
+print ('Norm - Mean ', normRBMELM.mean(), ' | Std: ', normRBMELM.std())
 
-print '\nOnly ELM:'
+print ('\nOnly ELM:')
 acc2 = np.asarray(acc2)
 tim2 = np.asarray(tim2)
 normELM = np.asarray(normELM)
-print 'Accuracy -  mean: ', acc2.mean(), '| Std: ', acc2.std()
-print 'Time - mean: ', tim2.mean(), ' | Std: ', tim2.std()
-print 'Norm - Mean ', normELM.mean(), ' | Std: ', normELM.std()
+print ('Accuracy -  mean: ', acc2.mean(), '| Std: ', acc2.std())
+print ('Time - mean: ', tim2.mean(), ' | Std: ', tim2.std())
+print ('Norm - Mean ', normELM.mean(), ' | Std: ', normELM.std())
 
-print '\nOnly ELM-RO:'
+print ('\nOnly ELM-RO:')
 acc3 = np.asarray(acc3)
 tim3 = np.asarray(tim3)
 normELMRO = np.asarray(normELMRO)
-print 'Accuracy -  mean: ', acc3.mean(), '| Std: ', acc3.std()
-print 'Time - mean: ', tim3.mean(), ' | Std: ', tim3.std()
-print 'Norm - Mean ', normELMRO.mean(), ' | Std: ', normELMRO.std()
+print ('Accuracy -  mean: ', acc3.mean(), '| Std: ', acc3.std())
+print ('Time - mean: ', tim3.mean(), ' | Std: ', tim3.std())
+print ('Norm - Mean ', normELMRO.mean(), ' | Std: ', normELMRO.std())
 
-#data = [acc2, acc3, acc]
-#boxplot(data, nPlots=1,  posSubPlot=[1,1], names=['ELM', 'ELM-RO', 'RBM-ELM'], xLabel='Algorithms', yLabel='Accuracy(%)', saveName='/home/patcha/ResultadosRO/dna', figSize=[17,7])
-##boxplot(data, nPlots=1,  posSubPlot=[1,1], names=['ELM', 'ELM-RO', 'RBM-ELM'], xLabel='Algorithms', yLabel='Accuracy(%)', figSize=[17,7])
-#statTest = statisticalTest (data, ['ELM', 'ELM-RO', 'RBM-ELM'], 0.05)
-#
-#saveResults (acc, acc2, acc3, statTest,['Acc RBM-ELM','Acc ELM','Acc ELM-RO','Statistical Test'], '/home/patcha/ResultadosRO/dna')
+data = [acc2, acc3, acc]
+plt.boxplot(data, labels=['ELM', 'ELM-RO', 'RBM-ELM'])
 
-
-
-
-
+"""
+TODO
+statTest = statisticalTest (data, ['ELM', 'ELM-RO', 'RBM-ELM'], 0.05)
+plt.saveResults (acc, acc2, acc3, statTest,['Acc RBM-ELM','Acc ELM','Acc ELM-RO','Statistical Test'], '/home/arissetyawan/APASCA/__THESIS___/ELM/codes/dna')
+"""
+plt.show()
 
 
 
