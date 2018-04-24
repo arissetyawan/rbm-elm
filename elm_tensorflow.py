@@ -10,6 +10,9 @@ Neurocomputing, v. 70, n. 1, p. 489 - 501, 2006.
 Using this class you can either train the net or just execute if you already know the ELM's weight.
 All the code is very commented to ease the undertanding.
 
+Revised: Aris Setyawan
+E-mail: arissetyawan.email@gmail.com
+
 If you find some bug, please e-mail me =)
 
 '''

@@ -3,6 +3,9 @@
 Author: André Pacheco
 E-mail: pacheco.comp@gmail.com
 
+Revised: Aris Setyawan
+E-mail: arissetyawan.email@gmail.com
+
 This class just implements a data class to ease the dataset manipulation.
 If you find some bug, plese e-mail me =)
 

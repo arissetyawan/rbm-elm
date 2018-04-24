@@ -4,6 +4,9 @@ Author: Andre Pacheco
 E-mail: pacheco.comp@gmail.com
 This file contains auxiliary function for classification problems.
 
+Revised: Aris Setyawan
+E-mail: arissetyawan.email@gmail.com
+
 If you find some bug, please, e-mail me
 
 '''

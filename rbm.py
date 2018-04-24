@@ -12,6 +12,9 @@ Momentum, v. 9, n. 1, p. 926, 2010.
 You can chosse either Gaussian-Bernoulli RBM or Bernoulli-Bernoulli RBM. All the code is 
 very commented to ease the understanding.
 
+Revised: Aris Setyawan
+E-mail: arissetyawan.email@gmail.com
+
 If you find some bug, please e-mail me =)
 
 '''
