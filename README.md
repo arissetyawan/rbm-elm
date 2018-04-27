@@ -1,3 +1,7 @@
+AUTHORIZED ONLY FOR BPK. ROMI SATRIA WAHONO 
+
+Selain Pak RSW, berarti mau nyontek saya ya ? :v
+
 Dependencies:
   
   * python 3.6
