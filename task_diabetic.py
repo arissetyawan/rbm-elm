@@ -175,11 +175,4 @@ plt.boxplot(data, labels=['ELM', 'ELM-RO', 'RBM-ELM'])
 
 
 
-statTest = statisticalTest (data, ['ELM', 'ELM-RO', 'RBM-ELM'], 0.05)
-plt.saveResults (acc, acc2, acc3, statTest,['Acc RBM-ELM','Acc ELM','Acc ELM-RO','Statistical Test'], '/home/arissetyawan/APASCA/__THESIS___/ELM/codes/dna')
-plt.show()
-
-
-
-
 

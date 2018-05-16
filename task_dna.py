@@ -33,8 +33,8 @@ from plotly.tools import FigureFactory as FF
 DATA_PATH= '/media/arissetyawan/01D01F7DA71A34F01/__PASCA__/__THESIS___/ELM/codes/rbm-elm/datasets/'
 
 it = 100
-hidNeurons = 250
-maxIterRbm = 17
+hidNeurons = 300
+maxIterRbm = 100
  
 # loading the data set
 print('Loading the dataset...')
@@ -57,13 +57,13 @@ print('Loading the dataset...')
 
 # test file
 print ( 'Loading test file...')  
-dnaTest = np.genfromtxt(DATA_PATH + 'dna_test.csv', delimiter=',')
+dnaTest = np.genfromtxt(DATA_PATH + 'dna/dna_test.csv', delimiter=',')
 # label ?
 print ( 'Loading label file...')  
-dnaVal = np.genfromtxt(DATA_PATH+ 'dna_val.csv', delimiter=',')
+dnaVal = np.genfromtxt(DATA_PATH+ 'dna/dna_val.csv', delimiter=',')
 # train 
 print ( 'Loading train file...')  
-dnaTrain = np.genfromtxt(DATA_PATH+ 'dna_train.csv', delimiter=',')
+dnaTrain = np.genfromtxt(DATA_PATH+ 'dna/dna_train.csv', delimiter=',')
 
 dnaTrain = np.concatenate((dnaTrain,dnaVal))
 
@@ -171,14 +171,15 @@ print ('Accuracy -  mean: ', acc3.mean(), '| Std: ', acc3.std())
 print ('Time - mean: ', tim3.mean(), ' | Std: ', tim3.std())
 print ('Norm - Mean ', normELMRO.mean(), ' | Std: ', normELMRO.std())
 
-data = [acc2, acc3, acc]
-plt.boxplot(data, labels=['ELM', 'ELM-RO', 'RBM-ELM'])
+data = [acc, acc2, acc3]
+plt.boxplot(data, labels=['RBM-ELM','ELM', 'ELM-RO'])
 
+'''
 statTest = statisticalTest (data, ['ELM', 'ELM-RO', 'RBM-ELM'], 0.05)
 plt.saveResults (acc, acc2, acc3, statTest,['Acc RBM-ELM','Acc ELM','Acc ELM-RO','Statistical Test'], '/home/arissetyawan/APASCA/__THESIS___/ELM/codes/dna')
 plt.show()
 
-
+'''
 
 
 
