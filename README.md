@@ -1,7 +1,4 @@
-AUTHORIZED ONLY FOR BPK. ROMI SATRIA WAHONO 
-
-Selain Pak RSW, berarti mau nyontek saya ya ? :v
-
+For the full codes, please ask to repo's owner
 Dependencies:
   
   * python 3.6
