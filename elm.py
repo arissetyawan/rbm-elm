@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 '''
-Author: Andre Pacheco
-E-mail: pacheco.comp@gmail.com
 This class implements the Extreme Learning Machine (ELM) according to:
 
 [1] Huang, G.B.; Zhu, Q.Y.; Siew, C.-K. Extreme learning machine: theory and applications.
